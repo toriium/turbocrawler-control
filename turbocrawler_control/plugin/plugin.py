@@ -1,9 +1,23 @@
+import logging
+
 from turbocrawler import CrawlerRequest, CrawlerResponse, CrawlerRunner, ExecutionInfo
 from turbocrawler.engine.plugin import Plugin
 from turbocrawler_control.application.crawler.crawler_service import CrawlerService
 from turbocrawler.engine.control import StopCrawler
 from turbocrawler_control.data.repository.logs_repository import LogsRepository
 from turbocrawler_control.presentation.schemas.crawler_schema import CreateCrawlerInput
+
+
+class TurboCrawlerControlHandler(logging.StreamHandler):
+    def __init__(self, running_id: str):
+        super().__init__()
+        self.running_id = running_id
+
+    def emit(self, record: logging.LogRecord):
+        if hasattr(record, 'json'):
+            ...
+        else:
+            LogsRepository.create_log(running_id=self.running_id, message=record.msg)
 
 
 class TurboCrawlerPlugin(Plugin):
@@ -19,8 +33,6 @@ class TurboCrawlerPlugin(Plugin):
             new_crawler = CreateCrawlerInput(name=crawler_name)
             crawler, error = CrawlerService.insert_crawler(new_crawler)
 
-        # LogsRepository.create_log('criando')
-
     def crawler_first_request(self) -> None:
         print("[TurboCrawlerPlugin] crawler_first_request")
 
@@ -34,3 +46,6 @@ class TurboCrawlerPlugin(Plugin):
 
     def stop_crawler(self, execution_info: ExecutionInfo) -> None:
         print("[TurboCrawlerPlugin] process_request")
+
+    def log_handler(self, running_id: str) -> logging.Handler | None:
+        return TurboCrawlerControlHandler(running_id)

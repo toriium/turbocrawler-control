@@ -4,9 +4,10 @@ from turbocrawler_control.data.db_orm.tables import TblLogs
 
 class LogsRepository:
     @staticmethod
-    def create_log(log_message: str) -> None:
+    def create_log(running_id: str, message: str) -> None:
         log_obg = TblLogs()
-        log_obg.log_message = log_message
+        log_obg.running_id = running_id
+        log_obg.message = message
 
         query_result, error = insert_obj(log_obg)
         if error:
