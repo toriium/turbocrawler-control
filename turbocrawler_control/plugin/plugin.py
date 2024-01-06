@@ -17,7 +17,7 @@ class TurboCrawlerControlHandler(logging.StreamHandler):
         if hasattr(record, 'json'):
             ...
         else:
-            LogsRepository.create_log(running_id=self.running_id, message=record.msg)
+            LogsRepository.create_log(running_id=self.running_id, level=record.levelname, message=record.msg)
 
 
 class TurboCrawlerPlugin(Plugin):
