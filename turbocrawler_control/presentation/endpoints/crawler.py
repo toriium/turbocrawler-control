@@ -21,7 +21,7 @@ crawler_router = APIRouter()
 async def get_crawler(crawler_id: int):
     result, error = CrawlerService.find_crawler_by_id(crawler_id=crawler_id)
     if result:
-        return JSONResponse(content=FindCrawlerOutput(**result.dict()).dict(), status_code=status.HTTP_200_OK)
+        return JSONResponse(content=FindCrawlerOutput(**result.model_dump()).model_dump(), status_code=status.HTTP_200_OK)
 
     return JSONResponse(content={"message": "Not found crawler with this id"}, status_code=status.HTTP_404_NOT_FOUND)
 
@@ -42,7 +42,7 @@ async def create_crawler(payload: CreateCrawlerInput):
             return JSONResponse(content={"message": "This crawler already exists in our base"},
                                 status_code=status.HTTP_400_BAD_REQUEST)
 
-    return JSONResponse(content=CreateCrawlerOutput(**crawler.dict()).dict(), status_code=status.HTTP_201_CREATED)
+    return JSONResponse(content=CreateCrawlerOutput(**crawler.model_dump()).model_dump(), status_code=status.HTTP_201_CREATED)
 
 
 @crawler_router.put(
@@ -60,7 +60,7 @@ async def update_crawler(payload: UpdateCrawlerInput):
         if error == CrawlerError.not_found:
             return JSONResponse(content={"message": "Crawler not found"}, status_code=status.HTTP_404_NOT_FOUND)
 
-    return JSONResponse(UpdateCrawlerOutput(**crawler.dict()).dict(), status_code=status.HTTP_200_OK)
+    return JSONResponse(UpdateCrawlerOutput(**crawler.model_dump()).model_dump(), status_code=status.HTTP_200_OK)
 
 
 @crawler_router.delete(

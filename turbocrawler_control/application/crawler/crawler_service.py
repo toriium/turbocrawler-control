@@ -14,7 +14,7 @@ class CrawlerService:
 
         if not found_crawler:
             return None, None
-        return Crawler(**found_crawler.dict()), None
+        return Crawler(**found_crawler.model_dump()), None
 
     @staticmethod
     def find_crawler_by_name(crawler_name: str) -> tuple[Crawler | None, CrawlerError | None]:
@@ -22,7 +22,15 @@ class CrawlerService:
 
         if not found_crawler:
             return None, None
-        return Crawler(**found_crawler.dict()), None
+        return Crawler(**found_crawler.model_dump()), None
+
+    @staticmethod
+    def get_all_crawlers() -> tuple[list[Crawler] | None, CrawlerError | None]:
+        crawlers, error = CrawlersRepository.get_all_crawlers()
+        if not crawlers:
+            return None, None
+
+        return [Crawler(**crawler.model_dump()) for crawler in crawlers], None
 
     @staticmethod
     def insert_crawler(data: CreateCrawlerInput) -> tuple[Crawler | None, CrawlerError | None]:
@@ -34,17 +42,17 @@ class CrawlerService:
             if error == SQLError.duplicate_entry:
                 return None, CrawlerError.duplicate_entry
 
-        return Crawler(**new_crawler.dict()), None
+        return Crawler(**new_crawler.model_dump()), None
 
     @staticmethod
     def update_crawler(data: UpdateCrawlerInput) -> tuple[Crawler | None, CrawlerError | None]:
-        target_crawler = Crawler(**data.dict())
+        target_crawler = Crawler(**data.model_dump())
 
         updated_crawler, error = CrawlersRepository.update_crawler(crawler=target_crawler)
         if error:
             return None, CrawlerError.not_found
 
-        return Crawler(**updated_crawler.dict()), None
+        return Crawler(**updated_crawler.model_dump()), None
 
     @staticmethod
     def delete_crawler(crawler_id) -> CrawlerError | None:

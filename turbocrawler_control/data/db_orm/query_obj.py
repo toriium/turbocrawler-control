@@ -28,6 +28,7 @@ def create_reading_session() -> Session:
     finally:
         session.close()
 
+
 @contextmanager
 def create_writing_session() -> Session:
     """Way - 1
@@ -53,7 +54,7 @@ def select_first_obj(obj_table, filter_by: dict):
     return query_result if query_result else None
 
 
-def select_all_obj(obj_table, filter_by: dict):
+def select_all_obj(obj_table, filter_by: dict = {}):
     """Way - 1
     vars = select_all_obj(obj=User, filter_by={"id": 1})
     for var in vars:
