@@ -2,7 +2,7 @@ from datetime import date
 from pydantic import BaseModel
 
 
-class Crawler(BaseModel):
+class CrawlerDomain(BaseModel):
     id: int | None = None
     name: str
     active: bool

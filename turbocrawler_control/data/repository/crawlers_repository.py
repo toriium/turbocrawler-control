@@ -3,7 +3,7 @@ from turbocrawler_control.data.db_orm.query_obj import delete_obj, insert_obj, s
 from turbocrawler_control.data.db_orm.tables.tbl_crawlers import TblCrawlers
 from turbocrawler_control.data.dtos.crawlers_dto import CrawlerDTO
 from turbocrawler_control.data.errors.sql_error import SQLError
-from turbocrawler_control.domain.crawler import Crawler
+from turbocrawler_control.domain.crawler import CrawlerDomain
 
 
 class CrawlersRepository:
@@ -35,7 +35,7 @@ class CrawlersRepository:
             return None, None
 
     @staticmethod
-    def insert_crawler(crawler: Crawler) -> tuple[CrawlerDTO | None, SQLError | None]:
+    def insert_crawler(crawler: CrawlerDomain) -> tuple[CrawlerDTO | None, SQLError | None]:
         new_crawler = TblCrawlers()
         new_crawler.name = crawler.name
         new_crawler.active = crawler.active
@@ -52,7 +52,7 @@ class CrawlersRepository:
             return None, None
 
     @staticmethod
-    def update_crawler(crawler: Crawler) -> tuple[CrawlerDTO | None, SQLError | None]:
+    def update_crawler(crawler: CrawlerDomain) -> tuple[CrawlerDTO | None, SQLError | None]:
         obj_update = crawler.model_dump()
         query_result, error = update_obj(TblCrawlers, filter_by={"id": crawler.id}, obj_update=obj_update)
         if error:

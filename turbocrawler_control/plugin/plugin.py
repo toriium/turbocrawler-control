@@ -4,18 +4,22 @@ from turbocrawler import CrawlerRequest, CrawlerResponse, CrawlerRunner, Executi
 from turbocrawler.engine.plugin import Plugin
 from turbocrawler_control.application.crawler.crawler_service import CrawlerService
 from turbocrawler.engine.control import StopCrawler
+from turbocrawler_control.application.execution.execution_service import ExecutionService
 from turbocrawler_control.data.repository.logs_repository import LogsRepository
 from turbocrawler_control.presentation.schemas.crawler_schema import CreateCrawlerInput
 
 
 class TurboCrawlerControlHandler(logging.StreamHandler):
-    def __init__(self, running_id: str):
+    def __init__(self, crawler, running_id: str):
         super().__init__()
+        self.crawler = crawler
         self.running_id = running_id
 
     def emit(self, record: logging.LogRecord):
         if hasattr(record, 'json'):
-            ...
+            data = record.json
+            ExecutionService.insert_execution(crawler_name=self.crawler.crawler_name,
+                                              requests_made=data['requests_made'])
         else:
             LogsRepository.create_log(running_id=self.running_id, level=record.levelname, message=record.msg)
 
@@ -47,5 +51,5 @@ class TurboCrawlerPlugin(Plugin):
     def stop_crawler(self, execution_info: ExecutionInfo) -> None:
         print("[TurboCrawlerPlugin] process_request")
 
-    def log_handler(self, running_id: str) -> logging.Handler | None:
-        return TurboCrawlerControlHandler(running_id)
+    def log_handler(self, crawler, running_id: str) -> logging.Handler | None:
+        return TurboCrawlerControlHandler(crawler, running_id)
