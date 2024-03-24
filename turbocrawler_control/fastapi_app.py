@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from turbocrawler_control.presentation.endpoints.crawler import crawler_router
+from turbocrawler_control.presentation.endpoints.execution import execution_router
 from fastapi.staticfiles import StaticFiles
 
 from turbocrawler_control.presentation.endpoints.home import home_router
@@ -29,6 +30,7 @@ def add_router(app: FastAPI):
     # app.include_router(health_check_router)
     app.include_router(crawler_router)
     app.include_router(home_router)
+    app.include_router(execution_router)
 
 
 def add_exception_handler(app: FastAPI):

@@ -22,21 +22,19 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Active</th>
+                            <th>Id</th>
+                            <th>requests_made</th>
                             <th>Creation date</th>
-                            <th>Execution</th>
+                            <th>Updated date</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for crawler in crawlers %}
+                        {% for execution in executions %}
                             <tr>
-                                <th scope="row">{{ crawler.name }}</th>
-                                <td>{{ crawler.active }}</td>
-                                <td>{{ crawler.creation_date }}</td>
-                                <td>
-                                    <a href="{{ url_for('execution', crawler_id=crawler.id) }}">{{ crawler.name }}</a>
-                                </td>
+                                <th scope="row">{{ execution.id }}</th>
+                                <td>{{ execution.requests_made }}</td>
+                                <td>{{ execution.creation_date }}</td>
+                                <td>{{ execution.updated_date }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

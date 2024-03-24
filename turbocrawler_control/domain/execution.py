@@ -6,7 +6,7 @@ from turbocrawler_control.domain.crawler import CrawlerDomain
 
 class ExecutionDomain(BaseModel):
     id: int | None
-    crawler: CrawlerDomain
+    crawler_id: int
     requests_made: int
     creation_date: date
     updated_date: date

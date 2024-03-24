@@ -31,7 +31,12 @@ templates = Jinja2Templates(directory="presentation/templates")
 
 
 @home_router.get("/", response_class=HTMLResponse)
-async def read_item(request: Request):
+async def home(request: Request):
     crawlers, error = CrawlerService.get_all_crawlers()
-    crawlers = [crawler.model_dump() for crawler in crawlers]
+
+    if crawlers:
+        crawlers = [crawler.model_dump() for crawler in crawlers]
+    else:
+        crawlers = []
+
     return templates.TemplateResponse(request=request, name="home.html", context={"crawlers": crawlers})

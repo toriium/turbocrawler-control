@@ -13,15 +13,18 @@ from turbocrawler_control.presentation.schemas.crawler_schema import CreateCrawl
 
 class ExecutionService:
     @staticmethod
-    def insert_execution(crawler_name: str, requests_made: int) -> tuple[ExecutionDomain | None, ExecutionError | None]:
-        crawler, error = CrawlerService.find_crawler_by_name(crawler_name=crawler_name)
-        if error:
-            if error == CrawlerError.not_found:
-                return None, ExecutionError.not_found
+    def get_executions_by_crawler(crawler_id: int) -> tuple[list[ExecutionDomain] | None, ExecutionError | None]:
+        executions, error = ExecutionsRepository.get_executions_by_crawler(crawler_id=crawler_id)
 
-        execution = CreateExecutionDTO(crawler=crawler.id, requests_made=requests_made)
+        if not executions:
+            return None, None
+
+        return [ExecutionDomain(**execution.model_dump()) for execution in executions], None
+
+    @staticmethod
+    def insert_execution(crawler_id: int, requests_made: int) -> tuple[ExecutionDomain | None, ExecutionError | None]:
+        execution = CreateExecutionDTO(crawler_id=crawler_id, requests_made=requests_made)
 
         execution = ExecutionsRepository.create_execution(execution=execution)
 
         return ExecutionDomain(**execution.model_dump()), None
-

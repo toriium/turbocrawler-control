@@ -11,7 +11,6 @@ class TblExecutions(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     crawler_id = Column(ForeignKey("tbl_crawlers.id"))
-    crawler = relationship("TblCrawlers", back_populates="execution")
     requests_made = Column(Integer, nullable=True)
     creation_date = Column(Date, nullable=False, default=date.today())
     updated_date = Column(Date, nullable=False, default=date.today())
