@@ -3,7 +3,6 @@ from datetime import date
 from pydantic import BaseModel
 
 
-
 class ExecutionDTO(BaseModel):
     id: int
     crawler_id: int
