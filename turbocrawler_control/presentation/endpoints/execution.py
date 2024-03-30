@@ -1,9 +1,6 @@
-from fastapi import APIRouter, status
-from starlette.responses import JSONResponse
+from fastapi import APIRouter
 
 from turbocrawler_control.application.execution.execution_service import ExecutionService
-from turbocrawler_control.presentation.schemas.crawler_schema import *
-from turbocrawler_control.presentation.schemas.message_schema import Message
 
 from fastapi import Request
 from fastapi.responses import HTMLResponse

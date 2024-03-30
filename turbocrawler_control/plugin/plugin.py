@@ -1,6 +1,6 @@
 import logging
 
-from turbocrawler import CrawlerRequest, CrawlerResponse, CrawlerRunner, ExecutionInfo
+from turbocrawler import CrawlerRequest, CrawlerResponse, ExecutionInfo
 from turbocrawler.engine.plugin import Plugin
 from turbocrawler_control.application.crawler.crawler_service import CrawlerService
 from turbocrawler.engine.control import StopCrawler

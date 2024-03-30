@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Date, Integer, String, Text, Boolean, func
+from sqlalchemy import Column, Date, Integer, String, Boolean
 from datetime import date
 from turbocrawler_control.data.db_orm.tables.base import Base
 

@@ -2,7 +2,6 @@ from datetime import date
 
 from pydantic import BaseModel
 
-from turbocrawler_control.data.dtos.crawlers_dto import CrawlerDTO
 
 
 class ExecutionDTO(BaseModel):

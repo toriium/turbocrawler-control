@@ -1,7 +1,6 @@
 import uvicorn
 
 from turbocrawler_control.fastapi_app import get_fastapi_app
-from turbocrawler_control.data.db_orm.init_db import init_database
 from turbocrawler_control.settings import FastAPIEnv
 
 

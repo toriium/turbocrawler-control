@@ -1,6 +1,5 @@
 from turbocrawler_control.data.db_orm.query_obj import insert_obj, select_all_obj
 from turbocrawler_control.data.db_orm.tables import TblExecutions
-from turbocrawler_control.data.dtos.crawlers_dto import CrawlerDTO
 from turbocrawler_control.data.dtos.executions_dto import CreateExecutionDTO, ExecutionDTO
 from turbocrawler_control.data.errors.sql_error import SQLError
 

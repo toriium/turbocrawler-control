@@ -1,7 +1,6 @@
-from sqlalchemy import Column, Date, Integer, String, Text, Boolean, func, ForeignKey
+from sqlalchemy import Column, Date, Integer, ForeignKey
 from datetime import date
 
-from sqlalchemy.orm import relationship
 
 from turbocrawler_control.data.db_orm.tables.base import Base
 
