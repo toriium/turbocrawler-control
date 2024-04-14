@@ -5,5 +5,5 @@ from pydantic import BaseModel
 
 class ScheduledExecutionDomain(BaseModel):
     id: int
-    crawler_id: int
+    crawler_name: str
     creation_date: date
